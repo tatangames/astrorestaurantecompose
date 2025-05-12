@@ -48,6 +48,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.LottieConstants
+import com.tatanstudios.astropollococina.vistas.opciones.OrdenPreparacionScreen
+import com.tatanstudios.astropollococina.vistas.principal.PrincipalScreen
 
 class SplashApp : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,20 +78,27 @@ fun AppNavigation() {
         composable(Routes.VistaSplash.route) { SplashScreen(navController) }
         composable(Routes.VistaLogin.route) { LoginScreen(navController) }
 
+        composable(Routes.VistaPrincipal.route) { PrincipalScreen(navController) }
 
 
-
+        // SIDEBAR
+        composable(Routes.VistaOrdenPreparacion.route) { OrdenPreparacionScreen(navController) }
     }
 }
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
-
     val ctx = LocalContext.current
     val tokenManager = remember { TokenManager(ctx) }
+
+    // Ejecutar la migración desde SharedPreferences solo una vez
+    LaunchedEffect(Unit) {
+        tokenManager.migrateFromSharedPreferencesIfNeeded()
+    }
+
     val idusuario by tokenManager.idUsuario.collectAsState(initial = "")
 
-    // Evitar que el usuario volver al splash con el botón atrás
+    // Evitar que el usuario vuelva al splash con el botón atrás
     DisposableEffect(Unit) {
         onDispose {
             navController.popBackStack(Routes.VistaSplash.route, true)
@@ -97,20 +106,21 @@ fun SplashScreen(navController: NavHostController) {
     }
 
     // Control de la navegación tras un retraso
-    LaunchedEffect(Unit) {
+    LaunchedEffect(idusuario) {
         delay(2000)
 
         if (idusuario.isNotEmpty()) {
-            /*navController.navigate(Routes.VistaPrincipal.route) {
+            navController.navigate(Routes.VistaPrincipal.route) {
                 popUpTo(Routes.VistaSplash.route) { inclusive = true }
-            }*/
-        }else{
+            }
+        } else {
             navController.navigate(Routes.VistaLogin.route) {
                 popUpTo(Routes.VistaSplash.route) { inclusive = true }
             }
         }
     }
 
+    // Animación y diseño
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.jsoncocina))
     val progress by animateLottieCompositionAsState(
         composition = composition,
@@ -120,10 +130,9 @@ fun SplashScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFD84B4B)), // Rojo fuerte (colorPrimary)
+            .background(color = Color(0xFFD84B4B)),
         contentAlignment = Alignment.Center
     ) {
-        // Animación Lottie en el centro
         LottieAnimation(
             composition = composition,
             progress = { progress },
@@ -132,7 +141,6 @@ fun SplashScreen(navController: NavHostController) {
                 .align(Alignment.Center)
         )
 
-        // Fila inferior con texto y logo
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -144,7 +152,7 @@ fun SplashScreen(navController: NavHostController) {
                 text = stringResource(id = R.string.app_name),
                 fontSize = 22.sp,
                 color = Color.White,
-                fontFamily = FontFamily(Font(R.font.berlin)),
+                fontFamily = FontFamily(Font(R.font.montserratmedium)),
                 modifier = Modifier.weight(1f)
             )
 

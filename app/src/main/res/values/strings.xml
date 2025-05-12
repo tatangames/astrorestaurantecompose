@@ -9,7 +9,26 @@
     <string name="contrasena">Contraseña</string>
     <string name="iniciar_sesion">Iniciar sesión</string>
     <string name="astro_pollo">Astro Pollo</string>
-
+    <string name="usuario_es_requerido">Usuario es requerido</string>
+    <string name="password_es_requerido">Contraseña es requerido</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="error_reintentar_de_nuevo">Error, reintentar de nuevo</string>
+    <string name="usuario_bloqueado">Usuario bloqueado</string>
+    <string name="usuario_incorrecto">Usuario incorrecto</string>
+    <string name="password_incorrecto">Contraseña incorrecto</string>
+    <string name="onesignal_notification_accent_color">FF00FF00</string>
+    <string name="nuevas_ordenes">Nuevas Ordenes</string>
+    <string name="orden_en_preparacion">Orden en Preparación</string>
+    <string name="completadas_hoy">Completadas Hoy</string>
+    <string name="canceladas_hoy">Canceladas Hoy</string>
+    <string name="categorias">Categorias</string>
+    <string name="notificacion">Notificación</string>
+    <string name="historial">Historial</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+    <string name="menu">Ménu</string>
+    <string name="atras">Atras</string>
 
 
 

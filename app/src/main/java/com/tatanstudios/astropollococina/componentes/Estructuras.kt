@@ -1,22 +1,34 @@
 package com.tatanstudios.astropollococina.componentes
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -27,16 +39,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.tatanstudios.astropollococina.R
+import com.tatanstudios.astropollococina.extras.ItemsMenuLateral
+import com.tatanstudios.astropollococina.ui.theme.ColorAzul
+import es.dmoral.toasty.Toasty
+
 @Composable
 fun BloqueTextFieldLogin(text: String, onTextChanged: (String) -> Unit, maxLength: Int) {
     // Color común para el texto del placeholder y la línea
@@ -184,3 +206,229 @@ fun BloqueTextFieldPassword(
         }
     }
 }
+
+
+
+@Composable
+fun CustomModal1Boton(showDialog: Boolean, message: String, onDismiss: () -> Unit) {
+    if (showDialog) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth() // Ajusta el ancho al 80% de la pantalla
+                    .background(Color.White, shape = RoundedCornerShape(16.dp))
+                    .padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(4.dp), // Agrega padding alrededor del contenido
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = message,
+                        fontSize = 18.sp,
+                        color = colorResource(R.color.colorNegro),
+                        modifier = Modifier.padding(bottom = 16.dp) // Espacio entre el texto y el botón
+                    )
+                    Button(
+                        onClick = onDismiss,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(R.color.colorAzul),
+                            contentColor = colorResource(R.color.colorBlanco),
+                        ),
+                    ) {
+                        Text(text = stringResource(id = R.string.aceptar))
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+@Composable
+fun LoadingModal(isLoading: Boolean, titulo:String = "Cargando...") {
+    if (isLoading) {
+        Dialog(onDismissRequest = { /* Evitar que se cierre el modal */ }) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(160.dp)
+                    .background(Color.White, shape = RoundedCornerShape(16.dp))
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    CircularProgressIndicator(color = colorResource(R.color.colorAzul))
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = titulo,
+                        fontSize = 18.sp,
+                        color = colorResource(R.color.colorNegro)
+                    )
+                }
+            }
+        }
+    }
+}
+
+enum class ToastType {
+    SUCCESS,
+    ERROR,
+    INFO,
+    WARNING
+}
+
+fun CustomToasty(context: Context, message: String, type: ToastType) {
+    when (type) {
+        ToastType.SUCCESS -> Toasty.success(context, message, Toasty.LENGTH_SHORT, true).show()
+        ToastType.ERROR -> Toasty.error(context, message, Toasty.LENGTH_SHORT, true).show()
+        ToastType.INFO -> Toasty.info(context, message, Toasty.LENGTH_SHORT, true).show()
+        ToastType.WARNING -> Toasty.warning(context, message, Toasty.LENGTH_SHORT, true).show()
+    }
+}
+
+
+
+val MontserratFont = FontFamily(
+    Font(R.font.montserratregular, FontWeight.Normal),
+    Font(R.font.montserratmedium, FontWeight.Bold)
+)
+
+@Composable
+fun DrawerHeader() {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(
+        Color.Red,
+        darkIcons = false
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(75.dp)
+            .background(Color.Red)
+            .statusBarsPadding()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.logonegrocirculo),
+                contentDescription = stringResource(R.string.logotipo),
+                modifier = Modifier
+                    .size(54.dp)
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Text(
+                text = stringResource(R.string.app_name),
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = Color.White,
+                    fontFamily = MontserratFont,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                ),
+                modifier = Modifier.padding(start = 4.dp)
+            )
+        }
+    }
+}
+
+
+@Composable
+fun DrawerBody(
+    items: List<ItemsMenuLateral>,
+    onItemClick: (ItemsMenuLateral) -> Unit
+) {
+    Column {
+        items.forEach { item ->
+            NavigationDrawerItem(
+                icon = { Icon(item.icon, contentDescription = null) },
+                label = {
+                    Text(
+                        stringResource(id = item.idString),
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Medium
+                    )
+                },
+                selected = false,
+                onClick = { onItemClick(item) },
+                modifier = Modifier.padding(horizontal = 12.dp)
+            )
+        }
+    }
+}
+
+
+
+@Composable
+fun CustomModalCerrarSesion(
+    showDialog: Boolean,
+    message: String,
+    onDismiss: () -> Unit,
+    onAccept: () -> Unit
+) {
+    if (showDialog) {
+        Dialog(onDismissRequest = { }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(16.dp)
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = message,
+                        fontSize = 18.sp,
+                        color = colorResource(R.color.colorNegro),
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Button(
+                            onClick = onDismiss,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.colorGrisv1),
+                                contentColor = colorResource(R.color.colorBlanco),
+                            ),
+                        ) {
+                            Text(stringResource(id = R.string.no), color = Color.White)
+                        }
+
+                        Button(
+                            onClick = onAccept,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.colorAzul),
+                                contentColor = colorResource(R.color.colorBlanco)
+                            ),
+                        ) {
+                            Text(stringResource(id = R.string.si), color = Color.White)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
