@@ -3,21 +3,26 @@ package com.tatanstudios.astropollococina.componentes
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Person
@@ -25,6 +30,8 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -50,6 +57,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -58,6 +66,7 @@ import com.tatanstudios.astropollococina.R
 import com.tatanstudios.astropollococina.extras.ItemsMenuLateral
 import com.tatanstudios.astropollococina.ui.theme.ColorAzul
 import es.dmoral.toasty.Toasty
+import org.w3c.dom.Text
 
 @Composable
 fun BloqueTextFieldLogin(text: String, onTextChanged: (String) -> Unit, maxLength: Int) {
@@ -300,34 +309,24 @@ val MontserratFont = FontFamily(
 
 @Composable
 fun DrawerHeader() {
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(
-        Color.Red,
-        darkIcons = false
-    )
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(75.dp)
             .background(Color.Red)
-            .statusBarsPadding()
     ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(10.dp),
+                .padding(10.dp), // Este padding es interno, está bien
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logonegrocirculo),
                 contentDescription = stringResource(R.string.logotipo),
-                modifier = Modifier
-                    .size(54.dp)
+                modifier = Modifier.size(54.dp)
             )
-
             Spacer(modifier = Modifier.width(16.dp))
-
             Text(
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -432,3 +431,129 @@ fun CustomModalCerrarSesion(
 
 
 
+@Composable
+fun CardNuevaOrden(
+    orden: String,
+    fecha: String,
+    venta: String,
+    haycupon: Int,
+    cupon: String?,
+    haypremio: Int,
+    premio: String?,
+    cliente: String,
+    direccion: String,
+    referencia: String?,
+    telefono: String?,
+    nota: String?,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            CampoTexto("Orden #", orden)
+            CampoTexto("Fecha", fecha)
+            CampoTexto("Venta", venta)
+
+            if (haycupon == 1){ CampoTexto("Cupón", cupon, colorResource(R.color.colorRojo)) }
+            if (haypremio == 1){ CampoTexto("Premio", premio, colorResource(R.color.colorRojo)) }
+            CampoTexto("Cliente", cliente)
+            CampoTexto("Dirección", direccion)
+            CampoTexto("Referencia", referencia)
+            CampoTexto("Teléfono", telefono)
+            if (!nota.isNullOrBlank()) CampoTexto("Nota", nota)
+        }
+    }
+}
+
+@Composable
+fun CampoTexto(etiqueta: String, valor: String?,
+               colorEtiqueta: Color = Color.Black
+) {
+    Row(modifier = Modifier.padding(vertical = 2.dp)) {
+        Text(
+            text = "$etiqueta: ",
+            fontWeight = FontWeight.Bold,
+            color = colorEtiqueta,
+            fontSize = 18.sp,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Text(
+            text = valor ?: "",
+            color = colorEtiqueta,
+            fontSize = 17.sp,
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+
+@Composable
+fun CustomModal2Botones(
+    showDialog: Boolean,
+    message: String,
+    onDismiss: () -> Unit,
+    onAccept: () -> Unit,
+    txtBtnAceptar: String,
+    txtBtnCancelar: String
+) {
+    if (showDialog) {
+        Dialog(onDismissRequest = { }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(16.dp)
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = message,
+                        fontSize = 17.sp,
+                        color = colorResource(R.color.colorNegro),
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        // Botón Cancelar (Gris claro)
+                        Button(
+                            onClick = onDismiss,
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.colorGrisv2),
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text(txtBtnCancelar)
+                        }
+
+                        // Botón Aceptar (Verde)
+                        Button(
+                            onClick = onAccept,
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.colorVerde), // Verde
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text(txtBtnAceptar)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

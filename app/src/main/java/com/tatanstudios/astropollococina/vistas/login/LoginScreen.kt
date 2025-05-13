@@ -49,6 +49,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tatanstudios.astropollococina.componentes.BloqueTextFieldLogin
@@ -117,7 +118,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = vi
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(170.dp)
+                    .height(150.dp)
                     .background(Color.White)
             ) {
                 // Logo centrado en el fondo blanco
@@ -132,12 +133,13 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = vi
 
             // Imagen tipo onda (wave) justo debajo del fondo blanco
             Image(
-                painter = painterResource(id = R.drawable.wave_onda),
+                painter = painterResource(id = R.drawable.wavepng),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(90.dp)
-                    .offset(y = (-5).dp) // Ajusta según sea necesario
+                    .offset(y = (-18).dp),
+                contentScale = ContentScale.FillWidth // Esto estira la imagen horizontalmente
             )
 
             // Título

@@ -49,6 +49,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.LottieConstants
 import com.tatanstudios.astropollococina.vistas.opciones.OrdenPreparacionScreen
+import com.tatanstudios.astropollococina.vistas.opciones.ordenesnuevas.EstadoNuevaOrdenScreen
 import com.tatanstudios.astropollococina.vistas.principal.PrincipalScreen
 
 class SplashApp : ComponentActivity() {
@@ -79,6 +80,17 @@ fun AppNavigation() {
         composable(Routes.VistaLogin.route) { LoginScreen(navController) }
 
         composable(Routes.VistaPrincipal.route) { PrincipalScreen(navController) }
+
+        // Cuando se Toca la Card de nuevas ordenes
+        composable(Routes.VistaEstadoNuevaOrden.route) { backStackEntry ->
+            val idordenStr = backStackEntry.arguments?.getString("idorden") ?: "0"
+            val idorden = idordenStr.toIntOrNull() ?: 0
+
+            EstadoNuevaOrdenScreen(navController = navController, _idorden = idorden)
+        }
+
+
+
 
 
         // SIDEBAR

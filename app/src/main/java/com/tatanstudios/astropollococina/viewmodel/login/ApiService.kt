@@ -2,6 +2,9 @@ package com.tatanstudios.astropollococina.viewmodel.login
 
 
 import com.tatanstudios.astropollococina.model.login.ModeloLogin
+import com.tatanstudios.astropollococina.model.ordenes.ModeloDatosBasicos
+import com.tatanstudios.astropollococina.model.ordenes.ModeloNuevasOrdenes
+import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoOrdenes
 import io.reactivex.rxjava3.core.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -22,11 +25,26 @@ interface ApiService {
                           @Field("idfirebase") idfirebase: String?
                           ): Single<ModeloLogin>
 
-    // REINTENTO SMS
-    /*@POST("app/reintento/telefono")
+    // LISTADO DE NUEVAS ORDENES
+    @POST("restaurante/nuevas/ordenes")
     @FormUrlEncoded
-    fun reintentoSMS(@Field("telefono") telefono: String): Single<ModeloReintentoSMS>*/
+    fun listadoNuevasOrdenas(@Field("id") id: String,
+                             @Field("idfirebase") idfirebase: String?
+    ): Single<ModeloNuevasOrdenes>
 
+
+    // LISTADO DE PRODUCTOS DE UNA ORDEN
+    @POST("restaurante/listado/producto/orden")
+    @FormUrlEncoded
+    fun listadoProductosOrden(@Field("idorden") idorden: Int
+    ): Single<ModeloProductoOrdenes>
+
+    // CANCELAR ORDEN
+    @POST("restaurante/cancelar/orden")
+    @FormUrlEncoded
+    fun cancelarOrden(@Field("idorden") idorden: Int,
+                      @Field("mensaje") mensaje: String
+    ): Single<ModeloDatosBasicos>
 
 
 

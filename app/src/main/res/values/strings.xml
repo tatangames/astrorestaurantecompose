@@ -29,6 +29,19 @@
     <string name="no">No</string>
     <string name="menu">Ménu</string>
     <string name="atras">Atras</string>
+    <string name="carrito_vacio">Carrito vacío</string>
+    <string name="sin_ordenes">Sin órdenes</string>
+    <string name="no_hay_ordenes_nuevas">No hay órdenes nuevas</string>
+    <string name="enviar">Enviar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="motivo">Motivo</string>
+    <string name="cancelacion">Cancelación</string>
+    <string name="nota_para_el_cliente">Nota para el Cliente</string>
+    <string name="iniciar">Iniciar</string>
+    <string name="cancelar_orden">Cancelar orden</string>
+    <string name="version">Versión</string>
+    <string name="nota_cancelamiento_es_requerida">Nota cancelamiento es requerida</string>
+    <string name="orden_cancelada">Orden Cancelada</string>
 
 
 
