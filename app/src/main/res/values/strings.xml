@@ -42,6 +42,14 @@
     <string name="version">Versión</string>
     <string name="nota_cancelamiento_es_requerida">Nota cancelamiento es requerida</string>
     <string name="orden_cancelada">Orden Cancelada</string>
+    <string name="iniciar_orden">Iniciar orden</string>
+    <string name="imagen_por_defecto">Imagen por defecto</string>
+    <string name="total">Total</string>
+    <string name="nota">Nota</string>
+    <string name="telefono">Teléfono</string>
+
+
+
 
 
 

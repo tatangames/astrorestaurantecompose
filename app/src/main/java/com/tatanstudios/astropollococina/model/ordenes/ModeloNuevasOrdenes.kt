@@ -34,8 +34,6 @@ data class ModeloNuevasOrdenesArray(
 
 
 
-
-
 data class ModeloProductoOrdenes(
     @SerializedName("success") val success: Int,
     @SerializedName("productos") val lista: List<ModeloProductoOrdenesArray>
@@ -59,7 +57,32 @@ data class ModeloProductoOrdenesArray(
 
 data class ModeloDatosBasicos(
     @SerializedName("success") val success: Int,
+    @SerializedName("titulo") val titulo: String?,
+    @SerializedName("mensaje") val mensaje: String?,
 )
+
+
+
+
+data class ModeloInfoProducto(
+    @SerializedName("success") val success: Int,
+    @SerializedName("productos") val lista: List<ModeloProductoOrdenesArray>
+)
+
+data class ModeloInfoProductoArray(
+    @SerializedName("id") val success: Int,
+    @SerializedName("id_ordenes") val idordenes: Int,
+    @SerializedName("id_producto") val idproducto: Int,
+    @SerializedName("cantidad") val cantidad: Int,
+    @SerializedName("nota") val nota: String?,
+    @SerializedName("precio") val precio: String?,
+    @SerializedName("nombreproducto") val nombreProducto: String?,
+    @SerializedName("utiliza_imagen") val utilizaImagen: Int,
+    @SerializedName("imagen") val imagen: String?,
+    @SerializedName("descripcion") val descripcion: String?,
+    @SerializedName("multiplicado") val multiplicado: String?,
+)
+
 
 
 

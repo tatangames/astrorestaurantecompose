@@ -3,6 +3,7 @@ package com.tatanstudios.astropollococina.viewmodel.login
 
 import com.tatanstudios.astropollococina.model.login.ModeloLogin
 import com.tatanstudios.astropollococina.model.ordenes.ModeloDatosBasicos
+import com.tatanstudios.astropollococina.model.ordenes.ModeloInfoProducto
 import com.tatanstudios.astropollococina.model.ordenes.ModeloNuevasOrdenes
 import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoOrdenes
 import io.reactivex.rxjava3.core.Single
@@ -45,6 +46,22 @@ interface ApiService {
     fun cancelarOrden(@Field("idorden") idorden: Int,
                       @Field("mensaje") mensaje: String
     ): Single<ModeloDatosBasicos>
+
+
+    // INICIAR LA ORDEN
+    @POST("restaurante/proceso/orden/iniciar-orden")
+    @FormUrlEncoded
+    fun iniciarOrden(@Field("idorden") idorden: Int
+    ): Single<ModeloDatosBasicos>
+
+
+    // INFORMACION DE UN PRODUCTOS SELECCIONADO
+    @POST("restaurante/listado/productos/ordenes-individual")
+    @FormUrlEncoded
+    fun infoProductoIndividual(@Field("idordendescrip") idordendescrip: Int
+    ): Single<ModeloInfoProducto>
+
+
 
 
 

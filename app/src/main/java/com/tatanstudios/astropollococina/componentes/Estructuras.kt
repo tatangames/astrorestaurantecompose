@@ -47,6 +47,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -57,10 +58,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.tatanstudios.astropollococina.R
 import com.tatanstudios.astropollococina.extras.ItemsMenuLateral
@@ -240,6 +244,60 @@ fun CustomModal1Boton(showDialog: Boolean, message: String, onDismiss: () -> Uni
                         color = colorResource(R.color.colorNegro),
                         modifier = Modifier.padding(bottom = 16.dp) // Espacio entre el texto y el botón
                     )
+                    Button(
+                        onClick = onDismiss,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(R.color.colorAzul),
+                            contentColor = colorResource(R.color.colorBlanco),
+                        ),
+                    ) {
+                        Text(text = stringResource(id = R.string.aceptar))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CustomModal1BotonTitulo(
+    showDialog: Boolean,
+    title: String,
+    message: String,
+    onDismiss: () -> Unit
+) {
+    if (showDialog) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White, shape = RoundedCornerShape(16.dp))
+                    .padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    // Título
+                    Text(
+                        text = title,
+                        fontSize = 20.sp,
+                        color = colorResource(R.color.colorNegro),
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+
+                    // Mensaje
+                    Text(
+                        text = message,
+                        fontSize = 16.sp,
+                        color = colorResource(R.color.colorNegro),
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    // Botón
                     Button(
                         onClick = onDismiss,
                         colors = ButtonDefaults.buttonColors(
@@ -457,16 +515,28 @@ fun CardNuevaOrden(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             CampoTexto("Orden #", orden)
+            Spacer(modifier = Modifier.height(6.dp))
             CampoTexto("Fecha", fecha)
+            Spacer(modifier = Modifier.height(6.dp))
             CampoTexto("Venta", venta)
 
-            if (haycupon == 1){ CampoTexto("Cupón", cupon, colorResource(R.color.colorRojo)) }
-            if (haypremio == 1){ CampoTexto("Premio", premio, colorResource(R.color.colorRojo)) }
+            if (haycupon == 1){
+                Spacer(modifier = Modifier.height(6.dp))
+                CampoTexto("Cupón", cupon, colorResource(R.color.colorRojo)) }
+            if (haypremio == 1){
+                Spacer(modifier = Modifier.height(6.dp))
+                CampoTexto("Premio", premio, colorResource(R.color.colorRojo))
+            }
+
+            Spacer(modifier = Modifier.height(6.dp))
             CampoTexto("Cliente", cliente)
+            Spacer(modifier = Modifier.height(6.dp))
             CampoTexto("Dirección", direccion)
+            Spacer(modifier = Modifier.height(6.dp))
             CampoTexto("Referencia", referencia)
-            CampoTexto("Teléfono", telefono)
-            if (!nota.isNullOrBlank()) CampoTexto("Nota", nota)
+            Spacer(modifier = Modifier.height(6.dp))
+            CampoTexto(stringResource(R.string.telefono), telefono)
+            if (!nota.isNullOrBlank()) CampoTexto(stringResource(R.string.nota), nota)
         }
     }
 }
@@ -554,6 +624,109 @@ fun CustomModal2Botones(
                     }
                 }
             }
+        }
+    }
+}
+
+
+
+@Composable
+fun ProductoItemCard(
+    cantidad: String,
+    hayImagen: Int,
+    imagenUrl: String,
+    titulo: String?,
+    descripcion: String?, // lo que el cliente escribe ejemplo (pollo, res)
+    precio: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .clickable { onClick() },
+    shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Cantidad
+            Box(
+                modifier = Modifier
+                    .background(color = colorResource(R.color.colorAzul), shape = RoundedCornerShape(6.dp))
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+                Text(
+                    text = "${cantidad}x",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            Spacer(modifier = Modifier.width(5.dp))
+
+            // Imagen del producto desde URL
+            if(hayImagen == 1){
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(imagenUrl)
+                        .crossfade(true)
+                        .placeholder(R.drawable.spinloading)
+                        .error(R.drawable.camaradefecto)
+                        .build(),
+                    contentDescription = stringResource(R.string.imagen_por_defecto),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+            }else{
+                Image(
+                    painter = painterResource(id = R.drawable.camaradefecto),
+                    contentDescription = stringResource(R.string.imagen_por_defecto),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+            }
+
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            // Título y descripción
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = titulo?: "",
+                    style = MaterialTheme.typography.titleMedium,
+                    overflow = TextOverflow.Ellipsis
+                )
+                if(!descripcion.isNullOrBlank()){
+                    Text(
+                        text = descripcion?: "",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Red,
+                        fontSize = 16.sp,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+
+            // Precio
+            Text(
+                text = precio,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(start = 8.dp)
+            )
         }
     }
 }
