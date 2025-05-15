@@ -1,4 +1,4 @@
-package com.tatanstudios.astropollococina.vistas.opciones.ordenesnuevas
+package com.tatanstudios.astropollococina.vistas.opciones.ordenpreparacion
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,15 +53,16 @@ import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoOrdenesArra
 import com.tatanstudios.astropollococina.model.rutas.Routes
 import com.tatanstudios.astropollococina.network.RetrofitBuilder
 import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.CancelarOrdenViewModel
+import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.FinalizarOrdenViewModel
 import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.IniciarOrdenViewModel
 import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.ProductosOrdenViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
-                           viewModelCancelar: CancelarOrdenViewModel = viewModel(),
-                           viewModelIniciarOrden: IniciarOrdenViewModel = viewModel(),
-                           viewModelProductosOrden: ProductosOrdenViewModel = viewModel(),
+fun EstadoPreparacionOrdenScreen(navController: NavHostController, _idorden: Int,
+                                 viewModelCancelar: CancelarOrdenViewModel = viewModel(),
+                                 viewModelFinalizarOrden: FinalizarOrdenViewModel = viewModel(),
+                                 viewModelProductosOrden: ProductosOrdenViewModel = viewModel(),
 ) {
     val ctx = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -75,11 +76,11 @@ fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
     val isLoadingCancelar by viewModelCancelar.isLoading.observeAsState(initial = false)
     val resultadoCancelar by viewModelCancelar.resultado.observeAsState()
 
-    // para datos de iniciar orden
-    val isLoadingIniciar by viewModelIniciarOrden.isLoading.observeAsState(initial = false)
-    val resultadoIniciar by viewModelIniciarOrden.resultado.observeAsState()
-    var showDialogIniciarOrden by remember { mutableStateOf(false) }
-    var showDialogOrdenIniciadaApi by remember { mutableStateOf(false) }
+    // para datos de finalizar orden
+    val isLoadingFinalizar by viewModelFinalizarOrden.isLoading.observeAsState(initial = false)
+    val resultadoFinalizar by viewModelFinalizarOrden.resultado.observeAsState()
+    var showDialogFinalizarOrden by remember { mutableStateOf(false) }
+    var showDialogOrdenFinalizadaApi by remember { mutableStateOf(false) }
 
 
     // titulo y mensaje de respuestas
@@ -110,7 +111,6 @@ fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
             viewModelProductosOrden.productosOrdenRetrofit(idorden = _idorden)
         }
     }
-
 
 
     Scaffold(
@@ -168,7 +168,7 @@ fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Button(
-                        onClick = { showDialogIniciarOrden = true },
+                        onClick = { showDialogFinalizarOrden = true },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF4CAF50),
                             contentColor = Color.White
@@ -293,19 +293,19 @@ fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
             )
         }
 
-        // CONFIRMAR PARA INICIAR ORDEN
-        if(showDialogIniciarOrden){
+        // CONFIRMAR PARA FINALIZAR ORDEN
+        if(showDialogFinalizarOrden){
             CustomModal2Botones(
                 showDialog = true,
-                message = stringResource(R.string.iniciar_orden),
-                onDismiss = { showDialogIniciarOrden = false },
+                message = stringResource(R.string.finalizar_orden),
+                onDismiss = { showDialogFinalizarOrden = false },
                 onAccept = {
-                    showDialogIniciarOrden = false
+                    showDialogFinalizarOrden = false
                     textoTituloApi = ""
                     textoMensajeApi = ""
 
                     coroutineScope.launch {
-                        viewModelIniciarOrden.iniciarOrdenRetrofit(
+                        viewModelFinalizarOrden.finalizarOrdenRetrofit(
                             idorden = _idorden,
                         )
                     }
@@ -317,14 +317,14 @@ fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
         }
 
         // MENSAJE DE API AL INICIAR ORDEN
-        if(showDialogOrdenIniciadaApi){
+        if(showDialogOrdenFinalizadaApi){
 
             CustomModal1BotonTitulo(
-                showDialog = showDialogOrdenIniciadaApi,
+                showDialog = showDialogOrdenFinalizadaApi,
                 title = textoTituloApi,
                 message = textoMensajeApi,
                 onDismiss = {
-                    showDialogOrdenIniciadaApi = false
+                    showDialogOrdenFinalizadaApi = false
                     navController.popBackStack()
                 }
             )
@@ -338,7 +338,7 @@ fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
             LoadingModal(isLoading = true)
         }
 
-        if (isLoadingIniciar) {
+        if (isLoadingFinalizar) {
             LoadingModal(isLoading = true)
         }
 
@@ -396,19 +396,19 @@ fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
     }
 
 
-    resultadoIniciar?.getContentIfNotHandled()?.let { result ->
+    resultadoFinalizar?.getContentIfNotHandled()?.let { result ->
         when (result.success) {
             1 -> {
-                // ORDEN CANCELADA POR CLIENTE
+                // SERVIDOR VERIFICA QUE NO HAYA SIDO CANCELADA Y RETORNA MENSAJE
                 textoTituloApi = result.titulo?: ""
                 textoMensajeApi = result.mensaje?: ""
-                showDialogOrdenIniciadaApi = true
+                showDialogOrdenFinalizadaApi = true
             }
             2 -> {
-               // ORDEN INICIADA
+                // ORDEN FINALIZADA
                 textoTituloApi = result.titulo?: ""
                 textoMensajeApi = result.mensaje?: ""
-                showDialogOrdenIniciadaApi = true
+                showDialogOrdenFinalizadaApi = true
             }
             else -> {
                 // Error, recargar de nuevo
@@ -423,4 +423,3 @@ fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
 
 
 }
-

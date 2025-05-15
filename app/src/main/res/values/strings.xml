@@ -47,9 +47,14 @@
     <string name="total">Total</string>
     <string name="nota">Nota</string>
     <string name="telefono">Teléfono</string>
-
-
-
+    <string name="producto">Producto</string>
+    <string name="estado_de_orden">Estado de orden</string>
+    <string name="precio">Precio</string>
+    <string name="unidades">Unidades</string>
+    <string name="notas">Notas</string>
+    <string name="finalizar_orden">Finalizar orden</string>
+    <string name="ordenes_hoy">Ordenes hoy</string>
+    <string name="no_hay_ordenes_completadas">No hay órdenes completadas</string>
 
 
 

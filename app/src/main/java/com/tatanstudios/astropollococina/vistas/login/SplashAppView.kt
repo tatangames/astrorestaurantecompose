@@ -48,8 +48,11 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.LottieConstants
-import com.tatanstudios.astropollococina.vistas.opciones.OrdenPreparacionScreen
+import com.tatanstudios.astropollococina.vistas.opciones.ordencompletadas.ListadoCompletadasOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordenesnuevas.EstadoNuevaOrdenScreen
+import com.tatanstudios.astropollococina.vistas.opciones.ordenesnuevas.InfoProductoScreen
+import com.tatanstudios.astropollococina.vistas.opciones.ordenpreparacion.EstadoPreparacionOrdenScreen
+import com.tatanstudios.astropollococina.vistas.opciones.ordenpreparacion.ListadoPreparacionOrdenScreen
 import com.tatanstudios.astropollococina.vistas.principal.PrincipalScreen
 
 class SplashApp : ComponentActivity() {
@@ -89,12 +92,31 @@ fun AppNavigation() {
             EstadoNuevaOrdenScreen(navController = navController, _idorden = idorden)
         }
 
+        // cuando se toca un producto y se vera su informacion
+        composable(Routes.VistaInfoProductoOrden.route) { backStackEntry ->
+            val idproductoStr = backStackEntry.arguments?.getString("idproducto") ?: "0"
+            val idproducto = idproductoStr.toIntOrNull() ?: 0
+
+            InfoProductoScreen(navController = navController, _idproducto = idproducto)
+        }
+
+        // LISTADO DE ORDENES EN PREPARACION
+        composable(Routes.VistaListadoOrdenPreparacion.route) { ListadoPreparacionOrdenScreen(navController) }
+
+        // Cuando se Toca la Card de preparacion ordenes
+        composable(Routes.VistaEstadoPreparacionOrden.route) { backStackEntry ->
+            val idordenStr = backStackEntry.arguments?.getString("idorden") ?: "0"
+            val idorden = idordenStr.toIntOrNull() ?: 0
+
+            EstadoPreparacionOrdenScreen(navController = navController, _idorden = idorden)
+        }
+
+        // LISTADO DE ORDENES COMPLETADAS HOY
+        composable(Routes.VistaListadoOrdenCompletadas.route) { ListadoCompletadasOrdenScreen(navController) }
 
 
 
 
-        // SIDEBAR
-        composable(Routes.VistaOrdenPreparacion.route) { OrdenPreparacionScreen(navController) }
     }
 }
 

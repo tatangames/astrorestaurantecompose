@@ -1,6 +1,5 @@
 package com.tatanstudios.astropollococina.network
 
-import com.tatanstudios.astropollococina.viewmodel.login.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit

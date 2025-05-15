@@ -1,20 +1,17 @@
-package com.tatanstudios.astropollococina.viewmodel.login
+package com.tatanstudios.astropollococina.network
 
 
 import com.tatanstudios.astropollococina.model.login.ModeloLogin
 import com.tatanstudios.astropollococina.model.ordenes.ModeloDatosBasicos
 import com.tatanstudios.astropollococina.model.ordenes.ModeloInfoProducto
 import com.tatanstudios.astropollococina.model.ordenes.ModeloNuevasOrdenes
+import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCompletadas
+import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesPreparacion
 import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoOrdenes
 import io.reactivex.rxjava3.core.Single
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.Part
 
 interface ApiService {
 
@@ -60,6 +57,26 @@ interface ApiService {
     @FormUrlEncoded
     fun infoProductoIndividual(@Field("idordendescrip") idordendescrip: Int
     ): Single<ModeloInfoProducto>
+
+
+    // LISTADO DE ORDENES EN PREPARACION
+    @POST("restaurante/preparacion/ordenes")
+    @FormUrlEncoded
+    fun listadoOrdenesPreparacion(@Field("id") id: String
+    ): Single<ModeloOrdenesPreparacion>
+
+    // FINALIZAR ORDEN EN PREPARACION
+    @POST("restaurante/proceso/orden/finalizar-orden")
+    @FormUrlEncoded
+    fun finalizarOrden(@Field("idorden") idorden: Int
+    ): Single<ModeloDatosBasicos>
+
+
+    // LISTADO DE ORDENES EN FINALIZADAS
+    @POST("restaurante/completadashoy/ordenes")
+    @FormUrlEncoded
+    fun listadoOrdenesCompletadas(@Field("id") id: String
+    ): Single<ModeloOrdenesCompletadas>
 
 
 

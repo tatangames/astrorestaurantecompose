@@ -132,7 +132,15 @@ fun PrincipalScreen(
                         }
                         2 -> {
 
-                            navController.navigate(Routes.VistaOrdenPreparacion.route) {
+                            navController.navigate(Routes.VistaListadoOrdenPreparacion.route) {
+                                navOptions {
+                                    launchSingleTop = true
+                                }
+                            }
+                        }
+                        3 -> {
+
+                            navController.navigate(Routes.VistaListadoOrdenCompletadas.route) {
                                 navOptions {
                                     launchSingleTop = true
                                 }
@@ -249,12 +257,6 @@ fun PrincipalScreen(
                                     telefono = tipoOrden.telefono,
                                     nota = tipoOrden.notaOrden,
                                     onClick = {
-                                        navController.navigate(Routes.VistaEstadoNuevaOrden.route) {
-                                            navOptions {
-                                                launchSingleTop = true
-                                            }
-                                        }
-
                                         navController.navigate(
                                             Routes.VistaEstadoNuevaOrden.createRoute(
                                                 tipoOrden.id.toString(),
