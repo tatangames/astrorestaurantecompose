@@ -55,6 +55,30 @@
     <string name="finalizar_orden">Finalizar orden</string>
     <string name="ordenes_hoy">Ordenes hoy</string>
     <string name="no_hay_ordenes_completadas">No hay órdenes completadas</string>
+    <string name="no_hay_ordenes_canceladas">No hay órdenes canceladas</string>
+
+
+    <string name="orden_numeral">Orden #</string>
+    <string name="fecha">Fecha</string>
+    <string name="cancelada">Cancelada</string>
+    <string name="cliente">Cliente</string>
+    <string name="direccion">Dirección</string>
+    <string name="referencia">Referencia</string>
+    <string name="venta">Venta</string>
+    <string name="premio">Premio</string>
+    <string name="cupon">Cupón</string>
+    <string name="finalizo">Finalizo</string>
+    <string name="categoria">Categoría</string>
+
+
+
+
+
+
+
+
+
+
 
 
 

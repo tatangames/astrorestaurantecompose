@@ -146,6 +146,14 @@ fun PrincipalScreen(
                                 }
                             }
                         }
+                        4 -> {
+
+                            navController.navigate(Routes.VistaListadoOrdenCanceladas.route) {
+                                navOptions {
+                                    launchSingleTop = true
+                                }
+                            }
+                        }
 
                         7 -> {
                             // cerrar sesion

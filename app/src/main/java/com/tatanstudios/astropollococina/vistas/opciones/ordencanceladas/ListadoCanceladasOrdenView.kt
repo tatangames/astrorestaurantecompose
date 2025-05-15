@@ -1,4 +1,4 @@
-package com.tatanstudios.astropollococina.vistas.opciones.ordencompletadas
+package com.tatanstudios.astropollococina.vistas.opciones.ordencanceladas
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -47,19 +47,19 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.navOptions
 import com.tatanstudios.astropollococina.R
 import com.tatanstudios.astropollococina.componentes.BarraToolbarColor
+import com.tatanstudios.astropollococina.componentes.CardCanceladasOrden
 import com.tatanstudios.astropollococina.componentes.CardCompletadasOrden
-import com.tatanstudios.astropollococina.componentes.CardNuevaOrden
 import com.tatanstudios.astropollococina.componentes.CustomToasty
 import com.tatanstudios.astropollococina.componentes.LoadingModal
 import com.tatanstudios.astropollococina.componentes.ToastType
-import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCompletadasArray
+import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCanceladasArray
 import com.tatanstudios.astropollococina.model.rutas.Routes
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.OrdenCompletadasBuscarViewModel
+import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.OrdenCanceladasBuscarViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ListadoCompletadasOrdenScreen(navController: NavHostController,
-                                  viewModel: OrdenCompletadasBuscarViewModel = viewModel()
+fun ListadoCanceladasOrdenScreen(navController: NavHostController,
+                                  viewModel: OrdenCanceladasBuscarViewModel = viewModel()
 ) {
 
     val ctx = LocalContext.current
@@ -71,20 +71,20 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
     val keyboardController = LocalSoftwareKeyboardController.current
     var _idusuario by remember { mutableStateOf("") }
 
-    var modeloListaOrdenesCompletadasArray by remember { mutableStateOf(listOf<ModeloOrdenesCompletadasArray>()) }
+    var modeloListaOrdenesCanceladasArray by remember { mutableStateOf(listOf<ModeloOrdenesCanceladasArray>()) }
 
     val refreshing by remember { mutableStateOf(false) }
     val pullRefreshState = rememberPullRefreshState(
         refreshing = refreshing,
         onRefresh = {
-            viewModel.completadasOrdenRetrofit(_idusuario)
+            viewModel.canceladasOrdenRetrofit(_idusuario)
         }
     )
 
     LaunchedEffect(Unit) {
         scope.launch {
             _idusuario = tokenManager.idUsuario.first()
-            viewModel.completadasOrdenRetrofit(_idusuario)
+            viewModel.canceladasOrdenRetrofit(_idusuario)
         }
     }
 
@@ -96,7 +96,7 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
         topBar = {
             BarraToolbarColor(
                 navController,
-                stringResource(R.string.completadas_hoy),
+                stringResource(R.string.canceladas_hoy),
                 colorResource(R.color.colorRojo),
             )
         }
@@ -109,7 +109,7 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
                 .pullRefresh(pullRefreshState) // 🔄 Aquí va el pull refresh
         ) {
 
-            if (modeloListaOrdenesCompletadasArray.isEmpty() && boolDatosCargados) {
+            if (modeloListaOrdenesCanceladasArray.isEmpty() && boolDatosCargados) {
                 // Mostrar imagen si la lista está vacía
                 Column(
                     modifier = Modifier.align(Alignment.Center),
@@ -127,7 +127,7 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = stringResource(R.string.no_hay_ordenes_nuevas),
+                        text = stringResource(R.string.no_hay_ordenes_canceladas),
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.Black,
                         fontSize = 18.sp
@@ -147,8 +147,8 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
                         .imePadding(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items(modeloListaOrdenesCompletadasArray) { tipoOrden ->
-                        CardCompletadasOrden(
+                    items(modeloListaOrdenesCanceladasArray) { tipoOrden ->
+                        CardCanceladasOrden(
                             orden = tipoOrden.id.toString(),
                             fecha = tipoOrden.fechaOrden,
                             venta = tipoOrden.totalFormat,
@@ -161,11 +161,11 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
                             referencia = tipoOrden.referencia,
                             telefono = tipoOrden.telefono,
                             nota = tipoOrden.notaOrden,
-                            fechaFinalizo = tipoOrden.fechaPreparada,
+                            fechaCancelo = tipoOrden.fechaCancelada,
                             onClick = {
                                 // Navegación
                                 navController.navigate(
-                                    Routes.VistaEstadoPreparacionOrden.createRoute(
+                                    Routes.VistaListadoProductoOrden.createRoute(
                                         tipoOrden.id.toString(),
                                     ),
                                     navOptions {
@@ -198,10 +198,9 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
         resultado?.getContentIfNotHandled()?.let { result ->
             when (result.success) {
                 1 -> {
-                    modeloListaOrdenesCompletadasArray = result.lista
+                    modeloListaOrdenesCanceladasArray = result.lista
                     boolDatosCargados = true
                 }
-
                 else -> {
                     CustomToasty(
                         ctx,

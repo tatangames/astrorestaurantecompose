@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.navOptions
 import com.tatanstudios.astropollococina.R
 import com.tatanstudios.astropollococina.componentes.BarraToolbarColor
-import com.tatanstudios.astropollococina.componentes.CardNuevaOrden
+import com.tatanstudios.astropollococina.componentes.CardPreparacionOrden
 import com.tatanstudios.astropollococina.componentes.CustomToasty
 import com.tatanstudios.astropollococina.componentes.LoadingModal
 import com.tatanstudios.astropollococina.componentes.ToastType
@@ -95,7 +95,7 @@ fun ListadoPreparacionOrdenScreen(navController: NavHostController,
         topBar = {
             BarraToolbarColor(
                 navController,
-                stringResource(R.string.ordenes_hoy),
+                stringResource(R.string.orden_en_preparacion),
                 colorResource(R.color.colorRojo),
             )
         }
@@ -147,7 +147,7 @@ fun ListadoPreparacionOrdenScreen(navController: NavHostController,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     items(modeloListaOrdenesPreparacionArray) { tipoOrden ->
-                        CardNuevaOrden(
+                        CardPreparacionOrden(
                             orden = tipoOrden.id.toString(),
                             fecha = tipoOrden.fechaOrden,
                             venta = tipoOrden.totalFormat,

@@ -2,7 +2,6 @@ package com.tatanstudios.astropollococina.vistas.login
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,22 +30,20 @@ import androidx.navigation.compose.rememberNavController
 import com.tatanstudios.astropollococina.R
 import com.tatanstudios.astropollococina.extras.TokenManager
 import com.tatanstudios.astropollococina.model.rutas.Routes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.LottieConstants
+import com.tatanstudios.astropollococina.vistas.opciones.ordencanceladas.ListadoCanceladasOrdenScreen
+import com.tatanstudios.astropollococina.vistas.opciones.ordencanceladas.ListadoProductosOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencompletadas.ListadoCompletadasOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordenesnuevas.EstadoNuevaOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordenesnuevas.InfoProductoScreen
@@ -115,6 +111,17 @@ fun AppNavigation() {
         composable(Routes.VistaListadoOrdenCompletadas.route) { ListadoCompletadasOrdenScreen(navController) }
 
 
+        // LISTADO DE ORDENES CANCELADAS HOY
+        composable(Routes.VistaListadoOrdenCanceladas.route) { ListadoCanceladasOrdenScreen(navController) }
+
+
+
+        composable(Routes.VistaListadoProductoOrden.route) { backStackEntry ->
+            val idordenStr = backStackEntry.arguments?.getString("idorden") ?: "0"
+            val idorden = idordenStr.toIntOrNull() ?: 0
+
+            ListadoProductosOrdenScreen(navController = navController, _idorden = idorden)
+        }
 
 
     }

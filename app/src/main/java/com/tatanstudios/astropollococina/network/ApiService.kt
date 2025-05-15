@@ -5,6 +5,7 @@ import com.tatanstudios.astropollococina.model.login.ModeloLogin
 import com.tatanstudios.astropollococina.model.ordenes.ModeloDatosBasicos
 import com.tatanstudios.astropollococina.model.ordenes.ModeloInfoProducto
 import com.tatanstudios.astropollococina.model.ordenes.ModeloNuevasOrdenes
+import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCanceladas
 import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCompletadas
 import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesPreparacion
 import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoOrdenes
@@ -72,11 +73,20 @@ interface ApiService {
     ): Single<ModeloDatosBasicos>
 
 
-    // LISTADO DE ORDENES EN FINALIZADAS
+    // LISTADO DE ORDENES FINALIZADAS HOY
     @POST("restaurante/completadashoy/ordenes")
     @FormUrlEncoded
     fun listadoOrdenesCompletadas(@Field("id") id: String
     ): Single<ModeloOrdenesCompletadas>
+
+
+    // LISTADO DE ORDENES CANCELADAS HOY
+    @POST("restaurante/canceladashoy/ordenes")
+    @FormUrlEncoded
+    fun listadoOrdenesCanceladas(@Field("id") id: String
+    ): Single<ModeloOrdenesCanceladas>
+
+
 
 
 

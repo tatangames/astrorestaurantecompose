@@ -5,7 +5,7 @@ sealed class Routes(val route: String) {
     object VistaLogin: Routes("login")
     object VistaPrincipal: Routes("principal")
 
-    // al tocar la card de nuevas ordenes
+    // AL TOCAR LA CARD DE NUEVAS ORDENES
     object VistaEstadoNuevaOrden: Routes("ordenEstadoNuevaOrden/{idorden}") {
         fun createRoute(idorden: String) = "ordenEstadoNuevaOrden/$idorden"
     }
@@ -15,7 +15,7 @@ sealed class Routes(val route: String) {
         fun createRoute(idproducto: String) = "infoProductoOrden/$idproducto"
     }
 
-
+    // LISTADO DE ORDENES EN PREPARACION
     object VistaListadoOrdenPreparacion: Routes("listadoPreparacion")
 
 
@@ -24,6 +24,18 @@ sealed class Routes(val route: String) {
         fun createRoute(idorden: String) = "ordenEstadoPreparacionOrden/$idorden"
     }
 
-
+    // LISTADO DE ORDENES COMPLETADAS
     object VistaListadoOrdenCompletadas: Routes("listadoCompletadas")
+
+    // LISTADO DE ORDENES CANCELADAS
+    object VistaListadoOrdenCanceladas: Routes("listadoCanceladas")
+
+
+    // LISTADO DE PRODUCTOS
+    object VistaListadoProductoOrden: Routes("listadoProductosOrden/{idorden}") {
+        fun createRoute(idorden: String) = "listadoProductosOrden/$idorden"
+    }
+
+
+
 }
