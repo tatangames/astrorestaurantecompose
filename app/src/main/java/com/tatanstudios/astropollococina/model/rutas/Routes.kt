@@ -37,5 +37,20 @@ sealed class Routes(val route: String) {
     }
 
 
+    // LISTADO DE CATEGORIAS
+    object VistaListadoCategorias: Routes("listadoCategorias")
+
+
+    // CUANDO SE TOCA UNA CATEGORIA Y VAMOS A VER LISTADO PRODUCTOS
+    object VistaListaProductosCategorias: Routes("listadoProductosCategorias/{idcategoria}") {
+        fun createRoute(idcategoria: String) = "listadoProductosCategorias/$idcategoria"
+    }
+
+
+
+
+
+
+
 
 }

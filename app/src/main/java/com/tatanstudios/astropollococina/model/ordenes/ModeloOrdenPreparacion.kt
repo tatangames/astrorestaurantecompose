@@ -121,6 +121,25 @@ data class ModeloOrdenesCanceladasArray(
 )
 
 
+data class ModeloCategorias(
+    @SerializedName("success") val success: Int,
+    @SerializedName("categorias") val lista: List<ModeloCategoriasArray>
+)
+
+data class ModeloCategoriasArray(
+    @SerializedName("id") val id: Int,
+    @SerializedName("id_servicio") val idservicio: Int,
+    @SerializedName("nombre") val nombre: String,
+    @SerializedName("posicion") val posicion: Int,
+    @SerializedName("activo") val activo: Int,
+    @SerializedName("usa_horario") val usaHorario: Int,
+    @SerializedName("hora_abre") val horaAbre: String?,
+    @SerializedName("hora_cierra") val horaCierra: String?,
+    @SerializedName("imagen") val imagen: String?,
+    @SerializedName("horario") val horario: String?,
+    @SerializedName("estado") val estado: String?, // es string
+
+)
 
 
 

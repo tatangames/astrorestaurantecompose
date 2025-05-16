@@ -51,7 +51,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -59,6 +61,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -514,26 +517,26 @@ fun CardNuevaOrden(
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            CampoTexto("Orden #", orden)
+            CampoTexto(stringResource(R.string.orden_numeral), orden)
             Spacer(modifier = Modifier.height(6.dp))
-            CampoTexto("Fecha", fecha)
+            CampoTexto(stringResource(R.string.fecha), fecha)
             Spacer(modifier = Modifier.height(6.dp))
-            CampoTexto("Venta", venta)
+            CampoTexto(stringResource(R.string.venta), venta)
 
             if (haycupon == 1){
                 Spacer(modifier = Modifier.height(6.dp))
-                CampoTexto("Cupón", cupon, colorResource(R.color.colorRojo)) }
+                CampoTexto(stringResource(R.string.cupon), cupon, colorResource(R.color.colorRojo)) }
             if (haypremio == 1){
                 Spacer(modifier = Modifier.height(6.dp))
-                CampoTexto("Premio", premio, colorResource(R.color.colorRojo))
+                CampoTexto(stringResource(R.string.premio), premio, colorResource(R.color.colorRojo))
             }
 
             Spacer(modifier = Modifier.height(6.dp))
-            CampoTexto("Cliente", cliente)
+            CampoTexto(stringResource(R.string.cliente), cliente)
             Spacer(modifier = Modifier.height(6.dp))
-            CampoTexto("Dirección", direccion)
+            CampoTexto(stringResource(R.string.direccion), direccion)
             Spacer(modifier = Modifier.height(6.dp))
-            CampoTexto("Referencia", referencia)
+            CampoTexto(stringResource(R.string.referencia), referencia)
             Spacer(modifier = Modifier.height(6.dp))
             CampoTexto(stringResource(R.string.telefono), telefono)
             if (!nota.isNullOrBlank()) CampoTexto(stringResource(R.string.nota), nota)
@@ -902,6 +905,101 @@ fun CardCanceladasOrden(
     }
 }
 
+
+
+
+@Composable
+fun CardCategorias(
+    imagenUrl: String,
+    titulo: String,
+    estado: String?,
+    horario: String?,
+    usahorario: Int,
+    activo: Int,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Imagen desde URL con Coil
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imagenUrl)
+                    .crossfade(true)
+                    .placeholder(R.drawable.spinloading)
+                    .error(R.drawable.camaradefecto)
+                    .build(),
+                contentDescription = stringResource(R.string.imagen_por_defecto),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = titulo,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = buildAnnotatedString {
+                        if (activo == 0) {
+                            // "Estado:" en negro normal
+                            withStyle(style = SpanStyle(color = Color.Black)) {
+                                append(stringResource(R.string.estado) + ": ")
+                            }
+                            // Estado en rojo
+                            withStyle(style = SpanStyle(color = Color.Red)) {
+                                append(estado ?: "")
+                            }
+                        } else {
+                            // Solo el estado en negro y negrita
+                            withStyle(style = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold)) {
+                                append(estado ?: "")
+                            }
+                        }
+                    },
+                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Unspecified // No forzamos color aquí porque usamos estilos internos
+                )
+
+                Spacer(modifier = Modifier.height(2.dp))
+
+                if(usahorario == 1){
+                    val texto = stringResource(R.string.por) + " " + horario
+                    Text(
+                        text = texto,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Black,
+                        fontSize = 16.sp
+                    )
+                }
+
+            }
+        }
+    }
+}
 
 
 

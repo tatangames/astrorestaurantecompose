@@ -155,7 +155,16 @@ fun PrincipalScreen(
                             }
                         }
 
-                        7 -> {
+                        5 -> { // CATEGORIAS
+
+                            navController.navigate(Routes.VistaListadoCategorias.route) {
+                                navOptions {
+                                    launchSingleTop = true
+                                }
+                            }
+                        }
+
+                        8 -> {
                             // cerrar sesion
                             showModalCerrarSesion = true
                         }

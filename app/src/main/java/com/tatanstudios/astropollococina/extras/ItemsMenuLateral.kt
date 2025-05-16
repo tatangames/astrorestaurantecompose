@@ -5,6 +5,7 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.filled.ListAlt
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
+import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Inventory
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
@@ -44,22 +45,29 @@ sealed class ItemsMenuLateral(
         4
     )
 
+
     object ItemMenu5 : ItemsMenuLateral(
-        Icons.Filled.Notifications,
-        R.string.notificacion,
+        Icons.Filled.Checklist,
+        R.string.categorias,
         5
     )
 
     object ItemMenu6 : ItemsMenuLateral(
-        Icons.AutoMirrored.Filled.ReceiptLong,
-        R.string.historial,
+        Icons.Filled.Notifications,
+        R.string.notificacion,
         6
     )
 
     object ItemMenu7 : ItemsMenuLateral(
+        Icons.AutoMirrored.Filled.ReceiptLong,
+        R.string.historial,
+        7
+    )
+
+    object ItemMenu8 : ItemsMenuLateral(
         Icons.AutoMirrored.Filled.Logout,
         R.string.cerrar_sesion,
-        7
+        8
     )
 }
 
@@ -71,4 +79,5 @@ val itemsMenu = listOf(ItemsMenuLateral.ItemMenu1,
     ItemsMenuLateral.ItemMenu5,
     ItemsMenuLateral.ItemMenu6,
     ItemsMenuLateral.ItemMenu7,
+    ItemsMenuLateral.ItemMenu8,
 )

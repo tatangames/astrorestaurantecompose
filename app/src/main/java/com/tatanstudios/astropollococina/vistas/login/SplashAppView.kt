@@ -42,6 +42,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.LottieConstants
+import com.tatanstudios.astropollococina.vistas.opciones.categorias.ListadoCategoriasScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencanceladas.ListadoCanceladasOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencanceladas.ListadoProductosOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencompletadas.ListadoCompletadasOrdenScreen
@@ -122,6 +123,11 @@ fun AppNavigation() {
 
             ListadoProductosOrdenScreen(navController = navController, _idorden = idorden)
         }
+
+
+        // LISTADO DE CATEGORIAS
+        composable(Routes.VistaListadoCategorias.route) { ListadoCategoriasScreen(navController) }
+
 
 
     }

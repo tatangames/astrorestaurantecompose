@@ -48,7 +48,6 @@ import androidx.navigation.navOptions
 import com.tatanstudios.astropollococina.R
 import com.tatanstudios.astropollococina.componentes.BarraToolbarColor
 import com.tatanstudios.astropollococina.componentes.CardCompletadasOrden
-import com.tatanstudios.astropollococina.componentes.CardNuevaOrden
 import com.tatanstudios.astropollococina.componentes.CustomToasty
 import com.tatanstudios.astropollococina.componentes.LoadingModal
 import com.tatanstudios.astropollococina.componentes.ToastType

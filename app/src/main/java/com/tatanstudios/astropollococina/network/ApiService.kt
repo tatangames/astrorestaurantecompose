@@ -2,8 +2,10 @@ package com.tatanstudios.astropollococina.network
 
 
 import com.tatanstudios.astropollococina.model.login.ModeloLogin
+import com.tatanstudios.astropollococina.model.ordenes.ModeloCategorias
 import com.tatanstudios.astropollococina.model.ordenes.ModeloDatosBasicos
 import com.tatanstudios.astropollococina.model.ordenes.ModeloInfoProducto
+import com.tatanstudios.astropollococina.model.ordenes.ModeloListaProductoCategorias
 import com.tatanstudios.astropollococina.model.ordenes.ModeloNuevasOrdenes
 import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCanceladas
 import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCompletadas
@@ -85,6 +87,30 @@ interface ApiService {
     @FormUrlEncoded
     fun listadoOrdenesCanceladas(@Field("id") id: String
     ): Single<ModeloOrdenesCanceladas>
+
+
+    // LISTADO DE CATEGORIAS
+    @POST("restaurante/listado/categorias")
+    @FormUrlEncoded
+    fun listadoCategorias(@Field("id") id: String
+    ): Single<ModeloCategorias>
+
+
+    // ACTUALIZAR CATEGORIA
+    @POST("restaurante/actualizar/estado/categorias")
+    @FormUrlEncoded
+    fun actualizarCategoria(@Field("idcategoria") idcategoria: Int,
+                          @Field("checkvalor") checkvalor: Int
+    ): Single<ModeloDatosBasicos>
+
+
+
+    // LISTADO DE PRODUCTOS POR CATEGORIA
+    @POST("restaurante/categoria/listado/productos")
+    @FormUrlEncoded
+    fun listadoProductosCategoria(@Field("idcategoria") idcategoria: Int
+    ): Single<ModeloListaProductoCategorias>
+
 
 
 
