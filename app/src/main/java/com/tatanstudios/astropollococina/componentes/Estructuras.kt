@@ -1003,3 +1003,84 @@ fun CardCategorias(
 
 
 
+
+@Composable
+fun ProductoCategoriaItemCard(
+    imagenUrl: String,
+    titulo: String,
+    estado: String?,
+    activo: Int,
+    utilizaImagen: Int,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Imagen desde URL con Coil
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imagenUrl)
+                    .crossfade(true)
+                    .placeholder(R.drawable.spinloading)
+                    .error(R.drawable.camaradefecto)
+                    .build(),
+                contentDescription = stringResource(R.string.imagen_por_defecto),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = titulo,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = buildAnnotatedString {
+                        if (activo == 0) {
+                            // "Estado:" en negro normal
+                            withStyle(style = SpanStyle(color = Color.Black)) {
+                                append(stringResource(R.string.estado) + ": ")
+                            }
+                            // Estado en rojo
+                            withStyle(style = SpanStyle(color = Color.Red)) {
+                                append(estado ?: "")
+                            }
+                        } else {
+                            // Solo el estado en negro y negrita
+                            withStyle(style = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold)) {
+                                append(estado ?: "")
+                            }
+                        }
+                    },
+                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Unspecified // No forzamos color aquí porque usamos estilos internos
+                )
+
+                Spacer(modifier = Modifier.height(2.dp))
+            }
+        }
+    }
+}

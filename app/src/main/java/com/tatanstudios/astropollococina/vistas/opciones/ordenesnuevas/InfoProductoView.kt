@@ -239,9 +239,9 @@ fun InfoProductoScreen(navController: NavHostController, _idproducto: Int,
                 1 -> {
                     // INFO PRODUCTO
                     for (item in result.lista) {
-                        _titulo = item.nombreProducto
+                        _titulo = item.nombreProducto?: ""
                         _descripcion = item.descripcion?: ""
-                        _precio = item.precio
+                        _precio = item.precio?: ""
                         _unidades = item.cantidad.toString()
                         _total = item.multiplicado?: ""
                         _notas = item.nota?: ""

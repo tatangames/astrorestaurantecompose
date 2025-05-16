@@ -112,7 +112,12 @@ interface ApiService {
     ): Single<ModeloListaProductoCategorias>
 
 
-
+    // ACTUALIZAR ESTADO DE PRODUCTO
+    @POST("restaurante/actualizar/estado/producto")
+    @FormUrlEncoded
+    fun actualizarEstadoProducto(@Field("idproducto") idproducto: Int,
+                                 @Field("checkvalor") checkvalor: Int,
+    ): Single<ModeloDatosBasicos>
 
 
 

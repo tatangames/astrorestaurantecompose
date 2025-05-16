@@ -161,3 +161,76 @@ fun DialogActualizarCategoria(
         )
     }
 }
+
+
+
+
+
+@Composable
+fun DialogActualizarProducto(
+    showDialog: Boolean,
+    estadoInicial: Boolean,
+    onDismiss: () -> Unit,
+    onConfirm: (Boolean) -> Unit
+) {
+    if (showDialog) {
+        var estado by remember(key1 = estadoInicial) {
+            mutableStateOf(estadoInicial)
+        }
+
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = {
+                Text(stringResource(R.string.actualizar_producto))
+            },
+            text = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .widthIn(min = 300.dp)
+                ) {
+                    Column {
+                        Text(stringResource(R.string.estado_de_producto))
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Switch(
+                                checked = estado,
+                                onCheckedChange = { estado = it },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = Color.White,
+                                    checkedTrackColor = colorResource(R.color.colorAzul), // Azul
+                                    uncheckedThumbColor = Color.White,
+                                    uncheckedTrackColor = Color.LightGray
+                                )
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(if (estado) stringResource(R.string.activado) else stringResource(R.string.desactivado))
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        onConfirm(estado)
+                        onDismiss()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Black,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(stringResource(R.string.guardar))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = onDismiss) {
+                    Text(stringResource(R.string.cancelar), color = colorResource(R.color.colorNegro))
+                }
+            }
+        )
+    }
+}

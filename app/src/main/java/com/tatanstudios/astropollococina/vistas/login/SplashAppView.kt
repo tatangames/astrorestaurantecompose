@@ -43,6 +43,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.LottieConstants
 import com.tatanstudios.astropollococina.vistas.opciones.categorias.ListadoCategoriasScreen
+import com.tatanstudios.astropollococina.vistas.opciones.categorias.ListadoProductosCategoriasScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencanceladas.ListadoCanceladasOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencanceladas.ListadoProductosOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencompletadas.ListadoCompletadasOrdenScreen
@@ -116,7 +117,7 @@ fun AppNavigation() {
         composable(Routes.VistaListadoOrdenCanceladas.route) { ListadoCanceladasOrdenScreen(navController) }
 
 
-
+        // LISTADO DE PRODUCTOS DE UNA ORDEN
         composable(Routes.VistaListadoProductoOrden.route) { backStackEntry ->
             val idordenStr = backStackEntry.arguments?.getString("idorden") ?: "0"
             val idorden = idordenStr.toIntOrNull() ?: 0
@@ -124,11 +125,16 @@ fun AppNavigation() {
             ListadoProductosOrdenScreen(navController = navController, _idorden = idorden)
         }
 
-
         // LISTADO DE CATEGORIAS
         composable(Routes.VistaListadoCategorias.route) { ListadoCategoriasScreen(navController) }
 
+        // LISTADO DE PRODUCTOS DE UNA CATEGORIA
+        composable(Routes.VistaListaProductosCategorias.route) { backStackEntry ->
+            val idcategoriaStr = backStackEntry.arguments?.getString("idcategoria") ?: "0"
+            val idcategoria = idcategoriaStr.toIntOrNull() ?: 0
 
+            ListadoProductosCategoriasScreen(navController = navController, _idcategoria = idcategoria)
+        }
 
     }
 }

@@ -92,7 +92,7 @@ data class ModeloListaProductoCategorias(
 )
 
 data class ModeloListaProductoCategoriasArray(
-    @SerializedName("id") val success: Int,
+    @SerializedName("id") val id: Int,
     @SerializedName("id_subcategorias") val idSubCategorias: Int,
     @SerializedName("nombre") val nombre: String?,
     @SerializedName("imagen") val imagen: String?,

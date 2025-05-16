@@ -220,9 +220,8 @@ fun ListadoCategoriasScreen(navController: NavHostController,
                         // Botón rojo - Modificar categoría
                         Button(
                             onClick = {
+                                // Acción para modificar actualizar estado categoría
                                 showSheetOpciones = false
-                                // Acción para modificar categoría
-
                                 showDialogActualizarCategoria = true
                             },
                             modifier = Modifier
@@ -245,6 +244,15 @@ fun ListadoCategoriasScreen(navController: NavHostController,
                             onClick = {
                                 showSheetOpciones = false
                                 // Acción para ir a productos
+
+                                navController.navigate(
+                                    Routes.VistaListaProductosCategorias.createRoute(
+                                        _idCategoria.toString(),
+                                    ),
+                                    navOptions {
+                                        launchSingleTop = true
+                                    }
+                                )
                             },
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(
