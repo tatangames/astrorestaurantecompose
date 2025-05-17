@@ -80,8 +80,11 @@
     <string name="actualizado">Actualizado</string>
     <string name="actualizar_producto">Actualizar producto</string>
     <string name="estado_de_producto">Estado de producto</string>
-
-
+    <string name="seleccionar_una_fecha">Selecciona una fecha</string>
+    <string name="seleccionar">Seleccionar</string>
+    <string name="seleccionar_ambas_fechas">Seleccionar ambas fechas</string>
+    <string name="buscar">Buscar</string>
+    <string name="no_hay_ordenes">No hay ordenes</string>
 
 
 

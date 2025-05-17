@@ -1,4 +1,4 @@
-package com.tatanstudios.astropollococina.vistas.opciones.ordencompletadas
+package com.tatanstudios.astropollococina.vistas.opciones.historial
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -13,10 +13,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,18 +43,20 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.navOptions
 import com.tatanstudios.astropollococina.R
 import com.tatanstudios.astropollococina.componentes.BarraToolbarColor
-import com.tatanstudios.astropollococina.componentes.CardCompletadasOrden
+import com.tatanstudios.astropollococina.componentes.CardHistorialOrden
 import com.tatanstudios.astropollococina.componentes.CustomToasty
 import com.tatanstudios.astropollococina.componentes.LoadingModal
+import com.tatanstudios.astropollococina.componentes.ProductoItemCard
 import com.tatanstudios.astropollococina.componentes.ToastType
-import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCompletadasArray
+import com.tatanstudios.astropollococina.model.ordenes.ModeloHistorialOrdenesArray
 import com.tatanstudios.astropollococina.model.rutas.Routes
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.OrdenCompletadasBuscarViewModel
+import com.tatanstudios.astropollococina.network.RetrofitBuilder
+import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.HistorialFechasBuscarViewModel
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ListadoCompletadasOrdenScreen(navController: NavHostController,
-                                  viewModel: OrdenCompletadasBuscarViewModel = viewModel()
+fun HistorialOrdenScreen(navController: NavHostController,
+                         _fecha1: String, _fecha2: String,
+                         viewModel: HistorialFechasBuscarViewModel = viewModel()
 ) {
 
     val ctx = LocalContext.current
@@ -70,20 +68,13 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
     val keyboardController = LocalSoftwareKeyboardController.current
     var _idusuario by remember { mutableStateOf("") }
 
-    var modeloListaOrdenesCompletadasArray by remember { mutableStateOf(listOf<ModeloOrdenesCompletadasArray>()) }
+    var modeloListaHistorialArray by remember { mutableStateOf(listOf<ModeloHistorialOrdenesArray>()) }
 
-    val refreshing by remember { mutableStateOf(false) }
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = refreshing,
-        onRefresh = {
-            viewModel.completadasOrdenRetrofit(_idusuario)
-        }
-    )
 
     LaunchedEffect(Unit) {
         scope.launch {
             _idusuario = tokenManager.idUsuario.first()
-            viewModel.completadasOrdenRetrofit(_idusuario)
+            viewModel.historialListadonRetrofit(_idusuario, _fecha1, _fecha2)
         }
     }
 
@@ -95,7 +86,7 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
         topBar = {
             BarraToolbarColor(
                 navController,
-                stringResource(R.string.completadas_hoy),
+                stringResource(R.string.historial),
                 colorResource(R.color.colorRojo),
             )
         }
@@ -105,10 +96,9 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .pullRefresh(pullRefreshState) // 🔄 Aquí va el pull refresh
         ) {
 
-            if (modeloListaOrdenesCompletadasArray.isEmpty() && boolDatosCargados) {
+            if (modeloListaHistorialArray.isEmpty() && boolDatosCargados) {
                 // Mostrar imagen si la lista está vacía
                 Column(
                     modifier = Modifier.align(Alignment.Center),
@@ -146,26 +136,28 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
                         .imePadding(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items(modeloListaOrdenesCompletadasArray) { tipoOrden ->
-                        CardCompletadasOrden(
+                    items(modeloListaHistorialArray) { tipoOrden ->
+
+                        CardHistorialOrden(
                             orden = tipoOrden.id.toString(),
                             fecha = tipoOrden.fechaOrden,
                             venta = tipoOrden.totalFormat,
+                            estado = tipoOrden.estado,
                             haycupon = tipoOrden.haycupon,
                             cupon = tipoOrden.mensajeCupon,
                             haypremio = tipoOrden.haypremio,
                             premio = tipoOrden.textopremio,
                             cliente = tipoOrden.cliente,
                             direccion = tipoOrden.direccion,
-                            referencia = tipoOrden.referencia,
                             telefono = tipoOrden.telefono,
                             nota = tipoOrden.notaOrden,
-                            fechaFinalizo = tipoOrden.fechaPreparada,
                             onClick = {
-                                // Navegación
+
+                              // VER PRODUCTOS
+
                                 navController.navigate(
-                                    Routes.VistaEstadoPreparacionOrden.createRoute(
-                                        tipoOrden.id.toString(),
+                                    Routes.VistaListadoProductosHistorialOrden.createRoute(
+                                        idorden = tipoOrden.id.toString(),
                                     ),
                                     navOptions {
                                         launchSingleTop = true
@@ -173,6 +165,7 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
                                 )
                             }
                         )
+
                     }
 
                     item {
@@ -181,13 +174,7 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
                 }
             }
 
-            // 🔽 Indicador visual de pull-to-refresh
-            PullRefreshIndicator(
-                refreshing = refreshing,
-                state = pullRefreshState,
-                modifier = Modifier
-                    .align(Alignment.TopCenter) // ✅ ahora dentro de BoxScope
-            )
+
         }
 
         if (isLoading) {
@@ -197,10 +184,9 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
         resultado?.getContentIfNotHandled()?.let { result ->
             when (result.success) {
                 1 -> {
-                    modeloListaOrdenesCompletadasArray = result.lista
+                    modeloListaHistorialArray = result.lista
                     boolDatosCargados = true
                 }
-
                 else -> {
                     CustomToasty(
                         ctx,

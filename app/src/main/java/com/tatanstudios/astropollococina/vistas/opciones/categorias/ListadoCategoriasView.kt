@@ -156,7 +156,7 @@ fun ListadoCategoriasScreen(navController: NavHostController,
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = stringResource(R.string.no_hay_ordenes_canceladas),
+                        text = stringResource(R.string.no_hay_ordenes),
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.Black,
                         fontSize = 18.sp

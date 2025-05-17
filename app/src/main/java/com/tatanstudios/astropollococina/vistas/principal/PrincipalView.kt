@@ -154,7 +154,6 @@ fun PrincipalScreen(
                                 }
                             }
                         }
-
                         5 -> { // CATEGORIAS
 
                             navController.navigate(Routes.VistaListadoCategorias.route) {
@@ -163,7 +162,18 @@ fun PrincipalScreen(
                                 }
                             }
                         }
+                        6 -> { // NOTIFICACION
 
+
+                        }
+                        7 -> { // HISTORIAL
+
+                            navController.navigate(Routes.VistaHistorialFecha.route) {
+                                navOptions {
+                                    launchSingleTop = true
+                                }
+                            }
+                        }
                         8 -> {
                             // cerrar sesion
                             showModalCerrarSesion = true

@@ -1029,19 +1029,30 @@ fun ProductoCategoriaItemCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Imagen desde URL con Coil
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(imagenUrl)
-                    .crossfade(true)
-                    .placeholder(R.drawable.spinloading)
-                    .error(R.drawable.camaradefecto)
-                    .build(),
-                contentDescription = stringResource(R.string.imagen_por_defecto),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(RoundedCornerShape(8.dp))
-            )
+            if(utilizaImagen == 1){
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(imagenUrl)
+                        .crossfade(true)
+                        .placeholder(R.drawable.spinloading)
+                        .error(R.drawable.camaradefecto)
+                        .build(),
+                    contentDescription = stringResource(R.string.imagen_por_defecto),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+            }else{
+                Image(
+                    painter = painterResource(id = R.drawable.camaradefecto),
+                    contentDescription = stringResource(R.string.imagen_por_defecto),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+            }
 
             Spacer(modifier = Modifier.width(12.dp))
 
@@ -1081,6 +1092,167 @@ fun ProductoCategoriaItemCard(
 
                 Spacer(modifier = Modifier.height(2.dp))
             }
+        }
+    }
+}
+
+
+
+
+
+@Composable
+fun CardHistorialOrden(
+    orden: String,
+    fecha: String,
+    venta: String,
+    estado: String?,
+    haycupon: Int,
+    cupon: String?,
+    haypremio: Int,
+    premio: String?, // textopremio
+    cliente: String,
+    direccion: String,
+    telefono: String?,
+    nota: String?,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            CampoTexto(stringResource(R.string.orden_numeral), orden)
+            Spacer(modifier = Modifier.height(6.dp))
+            CampoTexto(stringResource(R.string.fecha), fecha)
+            Spacer(modifier = Modifier.height(6.dp))
+            CampoTexto(stringResource(R.string.venta), venta)
+            Spacer(modifier = Modifier.height(6.dp))
+            CampoTexto(stringResource(R.string.estado), estado)
+
+            if (haycupon == 1){
+                Spacer(modifier = Modifier.height(6.dp))
+                CampoTexto(stringResource(R.string.cupon), cupon, colorResource(R.color.colorRojo)) }
+            if (haypremio == 1){
+                Spacer(modifier = Modifier.height(6.dp))
+                CampoTexto(stringResource(R.string.premio), premio, colorResource(R.color.colorRojo))
+            }
+
+            Spacer(modifier = Modifier.height(6.dp))
+            CampoTexto(stringResource(R.string.cliente), cliente)
+            Spacer(modifier = Modifier.height(6.dp))
+            CampoTexto(stringResource(R.string.direccion), direccion)
+            Spacer(modifier = Modifier.height(6.dp))
+            CampoTexto(stringResource(R.string.telefono), telefono)
+
+            if (!nota.isNullOrBlank()) CampoTexto(stringResource(R.string.nota), nota)
+        }
+    }
+}
+
+
+
+
+@Composable
+fun ProductoListadoHistorialItemCard(
+    cantidad: String,
+  hayImagen: Int,
+  imagenUrl: String,
+  titulo: String?,
+  descripcion: String?, // lo que el cliente escribe ejemplo (pollo, res)
+  precio: String,
+  modifier: Modifier = Modifier,
+  onClick: () -> Unit = {}
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Cantidad
+            Box(
+                modifier = Modifier
+                    .background(color = colorResource(R.color.colorAzul), shape = RoundedCornerShape(6.dp))
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+                Text(
+                    text = "${cantidad}x",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            Spacer(modifier = Modifier.width(5.dp))
+
+            // Imagen del producto desde URL
+            if(hayImagen == 1){
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(imagenUrl)
+                        .crossfade(true)
+                        .placeholder(R.drawable.spinloading)
+                        .error(R.drawable.camaradefecto)
+                        .build(),
+                    contentDescription = stringResource(R.string.imagen_por_defecto),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+            }else{
+                Image(
+                    painter = painterResource(id = R.drawable.camaradefecto),
+                    contentDescription = stringResource(R.string.imagen_por_defecto),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+            }
+
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            // Título y descripción
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = titulo?: "",
+                    style = MaterialTheme.typography.titleMedium,
+                    overflow = TextOverflow.Ellipsis
+                )
+                if(!descripcion.isNullOrBlank()){
+                    Text(
+                        text = descripcion?: "",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Red,
+                        fontSize = 16.sp,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+
+            // Precio
+            Text(
+                text = precio,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(start = 8.dp)
+            )
         }
     }
 }

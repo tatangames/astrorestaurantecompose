@@ -44,6 +44,10 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.LottieConstants
 import com.tatanstudios.astropollococina.vistas.opciones.categorias.ListadoCategoriasScreen
 import com.tatanstudios.astropollococina.vistas.opciones.categorias.ListadoProductosCategoriasScreen
+import com.tatanstudios.astropollococina.vistas.opciones.historial.HistorialFechaScreen
+import com.tatanstudios.astropollococina.vistas.opciones.historial.HistorialOrdenScreen
+import com.tatanstudios.astropollococina.vistas.opciones.historial.ListadoProductosHistorialScreen
+import com.tatanstudios.astropollococina.vistas.opciones.notificacion.NotificacionScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencanceladas.ListadoCanceladasOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencanceladas.ListadoProductosOrdenScreen
 import com.tatanstudios.astropollococina.vistas.opciones.ordencompletadas.ListadoCompletadasOrdenScreen
@@ -135,6 +139,35 @@ fun AppNavigation() {
 
             ListadoProductosCategoriasScreen(navController = navController, _idcategoria = idcategoria)
         }
+
+
+        // HISTORIAL FECHA
+        composable(Routes.VistaHistorialFecha.route) { HistorialFechaScreen(navController) }
+
+
+        // HISTORIAL LISTADO ORDENES
+        composable(Routes.VistaHistorialListadoOrden.route) { backStackEntry ->
+            val fecha1 = backStackEntry.arguments?.getString("fecha1") ?: ""
+            val fecha2 = backStackEntry.arguments?.getString("fecha2") ?: ""
+
+            HistorialOrdenScreen(navController = navController, _fecha1 = fecha1, _fecha2 = fecha2)
+        }
+
+
+        // LISTADO DE PRODUCTOS HISTORIAL ORDEN
+        composable(Routes.VistaListadoProductosHistorialOrden.route) { backStackEntry ->
+            val idordenStr = backStackEntry.arguments?.getString("idorden") ?: "0"
+            val idorden = idordenStr.toIntOrNull() ?: 0
+
+            ListadoProductosHistorialScreen(navController = navController, _idorden = idorden)
+        }
+
+        // NOTIFICACIONES
+        composable(Routes.VistaNotificaciones.route) { NotificacionScreen(navController) }
+
+
+
+
 
     }
 }

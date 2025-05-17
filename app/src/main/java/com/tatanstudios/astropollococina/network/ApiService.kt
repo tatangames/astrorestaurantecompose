@@ -4,12 +4,14 @@ package com.tatanstudios.astropollococina.network
 import com.tatanstudios.astropollococina.model.login.ModeloLogin
 import com.tatanstudios.astropollococina.model.ordenes.ModeloCategorias
 import com.tatanstudios.astropollococina.model.ordenes.ModeloDatosBasicos
+import com.tatanstudios.astropollococina.model.ordenes.ModeloHistorialOrdenes
 import com.tatanstudios.astropollococina.model.ordenes.ModeloInfoProducto
 import com.tatanstudios.astropollococina.model.ordenes.ModeloListaProductoCategorias
 import com.tatanstudios.astropollococina.model.ordenes.ModeloNuevasOrdenes
 import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCanceladas
 import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCompletadas
 import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesPreparacion
+import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoHistorialOrdenes
 import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoOrdenes
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Field
@@ -119,6 +121,22 @@ interface ApiService {
                                  @Field("checkvalor") checkvalor: Int,
     ): Single<ModeloDatosBasicos>
 
+
+    // HISTORIAL LISTADO DE ORDENES
+    @POST("restaurante/historial/ordenes")
+    @FormUrlEncoded
+    fun listadoHistorialOrdenes(@Field("id") id: String,
+                                 @Field("fecha1") fecha1: String,
+                                 @Field("fecha2") fecha2: String,
+    ): Single<ModeloHistorialOrdenes>
+
+
+
+    // LISTADO DE PRODUCTOS HISTORIAL ORDEN
+    @POST("restaurante/listado/producto/orden")
+    @FormUrlEncoded
+    fun listadoProductosHistorialOrden(@Field("idorden") idorden: Int
+    ): Single<ModeloProductoHistorialOrdenes>
 
 
 
