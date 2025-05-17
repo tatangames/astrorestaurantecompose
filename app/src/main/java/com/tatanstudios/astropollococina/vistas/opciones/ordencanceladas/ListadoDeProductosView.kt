@@ -35,12 +35,12 @@ import com.tatanstudios.astropollococina.extras.TokenManager
 import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoOrdenesArray
 import com.tatanstudios.astropollococina.model.rutas.Routes
 import com.tatanstudios.astropollococina.network.RetrofitBuilder
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.ProductosOrdenViewModel
+import com.tatanstudios.astropollococina.viewmodel.ProductosOrdenViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun ListadoProductosOrdenScreen(navController: NavHostController, _idorden: Int,
-                                 viewModelProductosOrden: ProductosOrdenViewModel = viewModel(),
+                                viewModelProductosOrden: ProductosOrdenViewModel = viewModel(),
 ) {
     val ctx = LocalContext.current
     val scope = rememberCoroutineScope()

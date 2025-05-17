@@ -28,20 +28,14 @@ import androidx.navigation.navOptions
 import com.tatanstudios.astropollococina.R
 import com.tatanstudios.astropollococina.componentes.BarraToolbarColor
 import com.tatanstudios.astropollococina.componentes.CustomToasty
-import com.tatanstudios.astropollococina.componentes.DialogActualizarProducto
 import com.tatanstudios.astropollococina.componentes.LoadingModal
-import com.tatanstudios.astropollococina.componentes.ProductoCategoriaItemCard
-import com.tatanstudios.astropollococina.componentes.ProductoItemCard
 import com.tatanstudios.astropollococina.componentes.ProductoListadoHistorialItemCard
 import com.tatanstudios.astropollococina.componentes.ToastType
 import com.tatanstudios.astropollococina.extras.TokenManager
-import com.tatanstudios.astropollococina.model.ordenes.ModeloListaProductoCategoriasArray
-import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoHistorialOrdenes
 import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoHistorialOrdenesArray
 import com.tatanstudios.astropollococina.model.rutas.Routes
 import com.tatanstudios.astropollococina.network.RetrofitBuilder
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.ActualizarProductosViewModel
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.ListadoProductosHistorialOrdenViewModel
+import com.tatanstudios.astropollococina.viewmodel.ListadoProductosHistorialOrdenViewModel
 import kotlinx.coroutines.launch
 
 @Composable

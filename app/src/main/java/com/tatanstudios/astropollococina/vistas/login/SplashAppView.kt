@@ -166,9 +166,6 @@ fun AppNavigation() {
         composable(Routes.VistaNotificaciones.route) { NotificacionScreen(navController) }
 
 
-
-
-
     }
 }
 

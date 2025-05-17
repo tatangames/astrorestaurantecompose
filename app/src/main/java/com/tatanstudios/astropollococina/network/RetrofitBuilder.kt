@@ -18,7 +18,7 @@ object RetrofitBuilder {
 
     private var retrofit: Retrofit? = null
     private var apiService: ApiService? = null
-    private var authenticatedApiService: ApiService? = null
+   // private var authenticatedApiService: ApiService? = null
 
     fun getApiService(): ApiService {
         if (apiService == null) {

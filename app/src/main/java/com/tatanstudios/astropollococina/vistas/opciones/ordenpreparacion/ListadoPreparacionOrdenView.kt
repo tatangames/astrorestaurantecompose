@@ -30,7 +30,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.tatanstudios.astropollococina.extras.TokenManager
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.OrdenPreparacionBuscarViewModel
+import com.tatanstudios.astropollococina.viewmodel.OrdenPreparacionBuscarViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import androidx.compose.material3.MaterialTheme
@@ -126,7 +126,7 @@ fun ListadoPreparacionOrdenScreen(navController: NavHostController,
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = stringResource(R.string.no_hay_ordenes_completadas),
+                        text = stringResource(R.string.no_hay_ordenes),
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.Black,
                         fontSize = 18.sp

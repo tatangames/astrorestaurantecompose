@@ -53,7 +53,7 @@ import com.tatanstudios.astropollococina.componentes.LoadingModal
 import com.tatanstudios.astropollococina.componentes.ToastType
 import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCompletadasArray
 import com.tatanstudios.astropollococina.model.rutas.Routes
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.OrdenCompletadasBuscarViewModel
+import com.tatanstudios.astropollococina.viewmodel.OrdenCompletadasBuscarViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -164,7 +164,7 @@ fun ListadoCompletadasOrdenScreen(navController: NavHostController,
                             onClick = {
                                 // Navegación
                                 navController.navigate(
-                                    Routes.VistaEstadoPreparacionOrden.createRoute(
+                                    Routes.VistaListadoProductoOrden.createRoute(
                                         tipoOrden.id.toString(),
                                     ),
                                     navOptions {

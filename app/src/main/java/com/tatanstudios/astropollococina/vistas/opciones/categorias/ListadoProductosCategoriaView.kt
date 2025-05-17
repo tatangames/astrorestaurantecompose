@@ -34,8 +34,8 @@ import com.tatanstudios.astropollococina.componentes.ToastType
 import com.tatanstudios.astropollococina.extras.TokenManager
 import com.tatanstudios.astropollococina.model.ordenes.ModeloListaProductoCategoriasArray
 import com.tatanstudios.astropollococina.network.RetrofitBuilder
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.ActualizarProductosViewModel
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.ListadoProductosCategoriaViewModel
+import com.tatanstudios.astropollococina.viewmodel.ActualizarProductosViewModel
+import com.tatanstudios.astropollococina.viewmodel.ListadoProductosCategoriaViewModel
 import kotlinx.coroutines.launch
 
 @Composable

@@ -139,6 +139,13 @@ interface ApiService {
     ): Single<ModeloProductoHistorialOrdenes>
 
 
+    // ENVIARME UNA NOTIFICACION
+    @POST("restaurante/notificacion/modo/prueba")
+    @FormUrlEncoded
+    fun notificacionPrueba(@Field("id") id: String,
+                           @Field("tokenid") tokenid: String,
+    ): Single<ModeloDatosBasicos>
+
 
 
 }

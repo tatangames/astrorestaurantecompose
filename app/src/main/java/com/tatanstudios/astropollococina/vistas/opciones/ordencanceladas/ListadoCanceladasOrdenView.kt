@@ -48,13 +48,12 @@ import androidx.navigation.navOptions
 import com.tatanstudios.astropollococina.R
 import com.tatanstudios.astropollococina.componentes.BarraToolbarColor
 import com.tatanstudios.astropollococina.componentes.CardCanceladasOrden
-import com.tatanstudios.astropollococina.componentes.CardCompletadasOrden
 import com.tatanstudios.astropollococina.componentes.CustomToasty
 import com.tatanstudios.astropollococina.componentes.LoadingModal
 import com.tatanstudios.astropollococina.componentes.ToastType
 import com.tatanstudios.astropollococina.model.ordenes.ModeloOrdenesCanceladasArray
 import com.tatanstudios.astropollococina.model.rutas.Routes
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.OrdenCanceladasBuscarViewModel
+import com.tatanstudios.astropollococina.viewmodel.OrdenCanceladasBuscarViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

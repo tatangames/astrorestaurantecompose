@@ -58,7 +58,7 @@ import com.tatanstudios.astropollococina.componentes.DrawerHeader
 import com.tatanstudios.astropollococina.extras.TokenManager
 import com.tatanstudios.astropollococina.extras.itemsMenu
 import com.tatanstudios.astropollococina.model.rutas.Routes
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.NuevasOrdenesViewModel
+import com.tatanstudios.astropollococina.viewmodel.NuevasOrdenesViewModel
 import com.tatanstudios.astropollococina.vistas.login.getOneSignalUserId
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -163,8 +163,11 @@ fun PrincipalScreen(
                             }
                         }
                         6 -> { // NOTIFICACION
-
-
+                            navController.navigate(Routes.VistaNotificaciones.route) {
+                                navOptions {
+                                    launchSingleTop = true
+                                }
+                            }
                         }
                         7 -> { // HISTORIAL
 

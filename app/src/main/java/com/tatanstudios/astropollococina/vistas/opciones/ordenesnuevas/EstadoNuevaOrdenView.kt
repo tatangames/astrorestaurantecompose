@@ -33,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -52,9 +51,9 @@ import com.tatanstudios.astropollococina.extras.TokenManager
 import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoOrdenesArray
 import com.tatanstudios.astropollococina.model.rutas.Routes
 import com.tatanstudios.astropollococina.network.RetrofitBuilder
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.CancelarOrdenViewModel
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.IniciarOrdenViewModel
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.ProductosOrdenViewModel
+import com.tatanstudios.astropollococina.viewmodel.CancelarOrdenViewModel
+import com.tatanstudios.astropollococina.viewmodel.IniciarOrdenViewModel
+import com.tatanstudios.astropollococina.viewmodel.ProductosOrdenViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -204,10 +203,6 @@ fun EstadoNuevaOrdenScreen(navController: NavHostController, _idorden: Int,
                         )
                     }
                 )
-
-
-
-
             }
 
             item {

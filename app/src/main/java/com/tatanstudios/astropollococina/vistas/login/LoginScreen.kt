@@ -54,7 +54,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.tatanstudios.astropollococina.componentes.BloqueTextFieldLogin
 import com.tatanstudios.astropollococina.componentes.BloqueTextFieldPassword
-import com.tatanstudios.astropollococina.viewmodel.login.LoginViewModel
+import com.tatanstudios.astropollococina.viewmodel.LoginViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.onesignal.OneSignal
 import com.tatanstudios.astropollococina.componentes.CustomModal1Boton

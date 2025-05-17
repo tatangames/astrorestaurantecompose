@@ -46,12 +46,10 @@ import com.tatanstudios.astropollococina.componentes.BarraToolbarColor
 import com.tatanstudios.astropollococina.componentes.CardHistorialOrden
 import com.tatanstudios.astropollococina.componentes.CustomToasty
 import com.tatanstudios.astropollococina.componentes.LoadingModal
-import com.tatanstudios.astropollococina.componentes.ProductoItemCard
 import com.tatanstudios.astropollococina.componentes.ToastType
 import com.tatanstudios.astropollococina.model.ordenes.ModeloHistorialOrdenesArray
 import com.tatanstudios.astropollococina.model.rutas.Routes
-import com.tatanstudios.astropollococina.network.RetrofitBuilder
-import com.tatanstudios.astropollococina.viewmodel.ordenesnuevas.HistorialFechasBuscarViewModel
+import com.tatanstudios.astropollococina.viewmodel.HistorialFechasBuscarViewModel
 
 @Composable
 fun HistorialOrdenScreen(navController: NavHostController,

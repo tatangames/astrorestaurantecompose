@@ -85,6 +85,16 @@
     <string name="seleccionar_ambas_fechas">Seleccionar ambas fechas</string>
     <string name="buscar">Buscar</string>
     <string name="no_hay_ordenes">No hay ordenes</string>
+    <string name="recibir_notificacion">Recibir notificación</string>
+    <string name="notificacion_enviada">Notificación enviada</string>
+    <string name="optimizacion_bateria_desactivada">Optimización de batería desactivada. Recibirás notificaciones sin problema.</string>
+    <string name="permitir_notificacion_permantente">Permitir notificaciones permanentes</string>
+    <string name="para_recibir_notificaciones_siempre">Para recibir notificaciones siempre, por favor desactiva la optimización de batería.</string>
+    <string name="finalizar">Finalizar</string>
+
+
+
+
 
 
 
