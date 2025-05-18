@@ -61,7 +61,7 @@ fun ListadoProductosOrdenScreen(navController: NavHostController, _idorden: Int,
     // Lanzar la solicitud cuando se carga la pantalla
     LaunchedEffect(Unit) {
         scope.launch {
-            idusuario = tokenManager.idUsuario.toString()
+            idusuario = tokenManager.idUsuario.first()
             viewModelProductosOrden.productosOrdenRetrofit(idorden = _idorden)
         }
     }

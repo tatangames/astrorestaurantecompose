@@ -36,6 +36,7 @@ import com.tatanstudios.astropollococina.model.ordenes.ModeloProductoHistorialOr
 import com.tatanstudios.astropollococina.model.rutas.Routes
 import com.tatanstudios.astropollococina.network.RetrofitBuilder
 import com.tatanstudios.astropollococina.viewmodel.ListadoProductosHistorialOrdenViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
@@ -63,7 +64,7 @@ fun ListadoProductosHistorialScreen(navController: NavHostController, _idorden: 
     // Lanzar la solicitud cuando se carga la pantalla
     LaunchedEffect(Unit) {
         scope.launch {
-            idusuario = tokenManager.idUsuario.toString()
+            idusuario = tokenManager.idUsuario.first()
             viewModelProductosListaHistorial.listaProductosHistorialRetrofit(idorden = _idorden)
         }
     }

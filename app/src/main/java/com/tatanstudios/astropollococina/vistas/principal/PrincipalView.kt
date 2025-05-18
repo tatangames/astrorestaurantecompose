@@ -420,8 +420,3 @@ private fun navigateToLogin(navController: NavHostController) {
     }
 }
 
-// ID DE ONE SIGNAL
-fun getOneSignalUserId(): String {
-    val deviceState = OneSignal.User.pushSubscription.id
-    return deviceState
-}

@@ -54,6 +54,7 @@ import com.tatanstudios.astropollococina.network.RetrofitBuilder
 import com.tatanstudios.astropollococina.viewmodel.CancelarOrdenViewModel
 import com.tatanstudios.astropollococina.viewmodel.FinalizarOrdenViewModel
 import com.tatanstudios.astropollococina.viewmodel.ProductosOrdenViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
@@ -105,7 +106,7 @@ fun EstadoPreparacionOrdenScreen(navController: NavHostController, _idorden: Int
     // Lanzar la solicitud cuando se carga la pantalla
     LaunchedEffect(Unit) {
         scope.launch {
-            idusuario = tokenManager.idUsuario.toString()
+            idusuario = tokenManager.idUsuario.first()
             viewModelProductosOrden.productosOrdenRetrofit(idorden = _idorden)
         }
     }

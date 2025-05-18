@@ -36,6 +36,7 @@ import com.tatanstudios.astropollococina.model.ordenes.ModeloListaProductoCatego
 import com.tatanstudios.astropollococina.network.RetrofitBuilder
 import com.tatanstudios.astropollococina.viewmodel.ActualizarProductosViewModel
 import com.tatanstudios.astropollococina.viewmodel.ListadoProductosCategoriaViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
@@ -71,7 +72,7 @@ fun ListadoProductosCategoriasScreen(navController: NavHostController, _idcatego
     // Lanzar la solicitud cuando se carga la pantalla
     LaunchedEffect(Unit) {
         scope.launch {
-            idusuario = tokenManager.idUsuario.toString()
+            idusuario = tokenManager.idUsuario.first()
             viewModelProductosCategorias.listaProductosCategoriasRetrofit(idcategoria = _idcategoria)
         }
     }
@@ -172,7 +173,7 @@ fun ListadoProductosCategoriasScreen(navController: NavHostController, _idcatego
                     ToastType.INFO
                 )
                 scope.launch {
-                    idusuario = tokenManager.idUsuario.toString()
+                    idusuario = tokenManager.idUsuario.first()
                     viewModelProductosCategorias.listaProductosCategoriasRetrofit(idcategoria = _idcategoria)
                 }
             }
